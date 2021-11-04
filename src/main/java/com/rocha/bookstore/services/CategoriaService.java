@@ -1,6 +1,7 @@
 package com.rocha.bookstore.services;
 
 import com.rocha.bookstore.domain.Categoria;
+import com.rocha.bookstore.dtos.CategoriaDTO;
 import com.rocha.bookstore.repositories.CategoriaRepository;
 import com.rocha.bookstore.services.exceptions.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,13 @@ public class CategoriaService {
 
     public Categoria create(Categoria obj) {
         obj.setId(null);
+        return repository.save(obj);
+    }
+
+    public Categoria update(Integer id, CategoriaDTO objDto) {
+        Categoria obj = findById(id);
+        obj.setNome(objDto.getNome());
+        obj.setDescricao(objDto.getDescricao());
         return repository.save(obj);
     }
 }
