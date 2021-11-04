@@ -1,5 +1,6 @@
 package com.rocha.bookstore.resources;
 
+import com.rocha.bookstore.services.exceptions.DataIntegrityViolationException;
 import com.rocha.bookstore.services.exceptions.ObjectNotFoundException;
 import com.rocha.bookstore.services.exceptions.StandartError;
 import org.springframework.http.HttpStatus;
@@ -16,5 +17,11 @@ public class ResourcesExcpetionHandler {
     public ResponseEntity<StandartError> objectNotFoundException(ObjectNotFoundException e, ServletRequest request) {
         StandartError error = new StandartError(System.currentTimeMillis(), HttpStatus.NOT_FOUND.value(), e.getMessage());
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
+    }
+
+    @ExceptionHandler(DataIntegrityViolationException.class)
+    public ResponseEntity<StandartError> dataIntegrityViolationException(DataIntegrityViolationException e, ServletRequest request) {
+        StandartError error = new StandartError(System.currentTimeMillis(), HttpStatus.BAD_REQUEST.value(), e.getMessage());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
     }
 }

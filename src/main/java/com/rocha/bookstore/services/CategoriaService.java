@@ -5,6 +5,7 @@ import com.rocha.bookstore.dtos.CategoriaDTO;
 import com.rocha.bookstore.repositories.CategoriaRepository;
 import com.rocha.bookstore.services.exceptions.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -40,6 +41,10 @@ public class CategoriaService {
 
     public void delete(Integer id) {
         findById(id);
-        repository.deleteById(id);
+        try {
+            repository.deleteById(id);
+        } catch (DataIntegrityViolationException e) {
+            throw new com.rocha.bookstore.services.exceptions.DataIntegrityViolationException("Categoria não pode ser deletado! Possui livros associados.");
+        }
     }
 }
