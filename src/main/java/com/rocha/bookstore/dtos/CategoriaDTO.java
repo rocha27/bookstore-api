@@ -1,7 +1,9 @@
 package com.rocha.bookstore.dtos;
 
 import com.rocha.bookstore.domain.Categoria;
+import org.hibernate.validator.constraints.Length;
 
+import javax.validation.constraints.NotEmpty;
 import java.io.Serializable;
 
 public class CategoriaDTO implements Serializable {
@@ -9,7 +11,13 @@ public class CategoriaDTO implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private Integer id;
+
+    @NotEmpty(message = "Campo NOME é obrigatório")
+    @Length(min = 3, max = 100, message = "Campo NOME deve ter entre 3 e 100 caracteres")
     private String nome;
+
+    @NotEmpty(message = "Campo DESCRIÇÃO é obrigatório")
+    @Length(min = 3, max = 100, message = "Campo DESCRIÇÃO deve ter entre 3 e 100 caracteres")
     private String descricao;
 
     public CategoriaDTO() {

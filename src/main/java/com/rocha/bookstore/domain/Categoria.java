@@ -1,6 +1,9 @@
 package com.rocha.bookstore.domain;
 
+import org.hibernate.validator.constraints.Length;
+
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,7 +17,12 @@ public class Categoria implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @NotEmpty(message = "Campo NOME é obrigatório")
+    @Length(min = 3, max = 100, message = "Campo NOME deve ter entre 3 e 100 caracteres")
     private String nome;
+
+    @NotEmpty(message = "Campo DESCRIÇÃO é obrigatório")
+    @Length(min = 3, max = 200, message = "Campo DESCRIÇÃO deve ter entre 3 e 100 caracteres")
     private String descricao;
 
     @OneToMany(mappedBy = "categoria")
